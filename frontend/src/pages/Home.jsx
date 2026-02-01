@@ -1,8 +1,10 @@
-import { useEffect } from "react";
-import { useCart } from "../context/CartContext";
-import { useAxios } from "../hooks/useAxios";
-import Hero from "./Hero";
-import Products from "./Products";
+import { useEffect } from 'react';
+import { useCart } from '../context/CartContext';
+import { useAxios } from '../hooks/useAxios';
+
+import Hero from './Hero';
+import Products from './Products';
+import useAuth from '../hooks/useAuth';
 
 export const Home = () => {
   const { dispatch } = useCart();
@@ -12,12 +14,12 @@ export const Home = () => {
   const { api } = useAxios();
 
   const fetchCartData = async () => {
-    dispatch({ type: "START_LOADING" });
+    dispatch({ type: 'START_LOADING' });
     if (!accessToken) return;
     try {
-      const response = await api.get("/cart/");
+      const response = await api.get('/cart/');
       dispatch({
-        type: "SET_CART",
+        type: 'SET_CART',
         payload: {
           items: response.data.items,
           subtotal: response.data.subtotal || 0,
@@ -26,8 +28,8 @@ export const Home = () => {
         },
       });
     } catch (err) {
-      console.error("Fetch error", err);
-      dispatch({ type: "STOP_LOADING" });
+      console.error('Fetch error', err);
+      dispatch({ type: 'STOP_LOADING' });
     }
   };
 
